@@ -52,16 +52,12 @@ for container in containers:
     #Description
     description = title_container[0].p.text
     language = detect(description)
-
-    #Programming language
-    hardskill = "Java"
+    language_upper = language.upper()
 
     #Vervolgactie (Teamleader)
     vervolgactie = "Nieuw"
 
-    
-
-    companyinfo = [company, city, url, title, description,language, hardskill, vervolgactie]
+    companyinfo = [company, city,language_upper, title,description,url, vervolgactie]
 
     for y in container:
 
