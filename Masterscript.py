@@ -44,6 +44,24 @@ for container in containers:
     company_container = container.div.h2
     company = company_container.text.strip()
 
+    #Behandelaar
+
+    bram = ["A", "B", "C","D", "E", "F","G","H"]
+    leon = ["I","J","K","L","M","N","O","P"]
+    renier = ["Q","R","S","T","U","V","W","X","Y","Z"]
+
+    for i in bram:
+        if company.startswith(i):
+            behandelaar = "Bram"
+
+    for i in leon:
+        if company.startswith(i):
+            behandelaar = "Leon"
+
+    for i in renier:
+        if company.startswith(i):
+            behandelaar = "Renier"
+
     #City
     city = container.div.a["title"]
 
@@ -65,12 +83,12 @@ for container in containers:
     # Connecties op LinkedIN?
     linkedin = "Nee"
 
-    companyinfo = [date,company, city,language_upper,title,linkedin, teamleader,description,full_url]
+    companyinfo = [date,company,city,behandelaar,language_upper,title,linkedin,teamleader,description,full_url]
 
     for y in container:
 
         for i in range(0,len(companyinfo)):
-            e=sheet.cell(row=start_row,column=1+i)
+            e=sheet.cell(row=start_row,column=2+i)
             e.value=companyinfo[i]
 
 wb.save("vacatures.xlsx")
