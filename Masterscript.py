@@ -1,11 +1,15 @@
 #Openpyxl commands
+import langdetect
 import bs4
 import openpyxl
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
+
 # excel stuff
 # set var to workbook
+from langdetect import detect
+
 wb=openpyxl.load_workbook('vacatures.xlsx')
 
 # Sheets in workbook
@@ -31,36 +35,39 @@ containers = page_soup.findAll("article", {"class":"vacancy-item item up"})
 
 #write to excel
 for container in containers:
- #Company name
- company_container = container.div.h2
- company = company_container.text.strip()
+    #Company name
+    company_container = container.div.h2
+    company = company_container.text.strip()
 
- #City
- city = container.div.a["title"]
+    #City
+    city = container.div.a["title"]
 
- #URL
- url = container.div.div.a["href"]
+    #URL
+    url = container.div.div.a["href"]
 
- #Title
- title_container = container.findAll("div", {"class":"info"})
- title = title_container[0].img["alt"]
+    #Title
+    title_container = container.findAll("div", {"class":"info"})
+    title = title_container[0].img["alt"]
 
- #Description
- description = title_container[0].p.text
+    #Description
+    description = title_container[0].p.text
+    language = detect(description)
 
- #Programming language
- hardskill = "Java"
+    #Programming language
+    hardskill = "Java"
 
- #Vervolgactie (Teamleader)
- vervolgactie = "Nieuw"
+    #Vervolgactie (Teamleader)
+    vervolgactie = "Nieuw"
 
- companyinfo = [company, city, url, title, description, hardskill, vervolgactie]
+    
 
- for y in container:
+    companyinfo = [company, city, url, title, description,language, hardskill, vervolgactie]
 
-  for i in range(0,len(companyinfo)):
-   e=sheet.cell(row=start_row,column=1+i)
-   e.value=companyinfo[i]
+    for y in container:
+
+        for i in range(0,len(companyinfo)):
+            e=sheet.cell(row=start_row,column=1+i)
+            e.value=companyinfo[i]
 
 wb.save("vacatures.xlsx")
 
