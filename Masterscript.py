@@ -2,6 +2,7 @@
 import langdetect
 import bs4
 import openpyxl
+import datetime
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
@@ -35,6 +36,10 @@ containers = page_soup.findAll("article", {"class":"vacancy-item item up"})
 
 #write to excel
 for container in containers:
+
+    # Datestamp
+    date = datetime.date.today()
+
     #Company name
     company_container = container.div.h2
     company = company_container.text.strip()
@@ -43,7 +48,7 @@ for container in containers:
     city = container.div.a["title"]
 
     #URL
-    url = container.div.div.a["href"]
+    full_url = container.div.div.a["href"]
 
     #Title
     title_container = container.findAll("div", {"class":"info"})
@@ -55,9 +60,12 @@ for container in containers:
     language_upper = language.upper()
 
     #Vervolgactie (Teamleader)
-    vervolgactie = "Nieuw"
+    teamleader = "Nieuw"
 
-    companyinfo = [company, city,language_upper, title,description,url, vervolgactie]
+    # Connecties op LinkedIN?
+    linkedin = "Nee"
+
+    companyinfo = [date,company, city,language_upper,title,linkedin, teamleader,description,full_url]
 
     for y in container:
 
