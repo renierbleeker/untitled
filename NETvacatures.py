@@ -23,7 +23,7 @@ sheet=wb.active
 start_row = sheet.max_row + 1
 
 #opening up connection grabbing the page
-my_url = 'https://www.jouwictvacature.nl/vacatures/java'
+my_url = 'https://www.jouwictvacature.nl/vacatures/net'
 uClient = uReq(my_url)
 page_html = uClient.read()
 uClient.close()
@@ -46,17 +46,17 @@ for container in containers:
 
     #Behandelaar
 
-    bram = ["A", "B", "C","D", "E", "F","G","H"]
-    leon = ["I","J","K","L","M","N","O","P"]
+    leon = ["A", "B", "C","D", "E", "F","G","H"]
+    bram = ["I","J","K","L","M","N","O","P"]
     renier = ["Q","R","S","T","U","V","W","X","Y","Z"]
-
-    for i in bram:
-        if company.startswith(i):
-            behandelaar = "Bram"
 
     for i in leon:
         if company.startswith(i):
             behandelaar = "Leon"
+
+    for i in bram:
+        if company.startswith(i):
+            behandelaar = "Bram"
 
     for i in renier:
         if company.startswith(i):
@@ -88,8 +88,9 @@ for container in containers:
     for y in container:
 
         for i in range(0,len(companyinfo)):
-            e=sheet.cell(row=start_row,column=2+i)
+            e=sheet.cell(row=start_row,column=1+i)
             e.value=companyinfo[i]
 
 wb.save("vacatures.xlsx")
+
 
