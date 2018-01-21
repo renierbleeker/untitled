@@ -73,10 +73,40 @@ for container in containers:
     title_container = container.findAll("div", {"class":"info"})
     title = title_container[0].img["alt"]
 
+    # Exp level
+    find_words = ["Junior", "Medior", "Senior"]
+
+
+    def find_str(s, char):
+        index = 0
+
+        if char in s:
+            c = char[0]
+            for ch in s:
+                if ch == c:
+                    if s[index:index + len(char)] == char:
+                        return index
+
+                index += 1
+
+        return -1
+
+
+    for i in find_words:
+        result = find_str(title, i)
+        if result == 0:
+            explevel = i
+            break
+        else:
+            explevel = "not found"
+
+
     #Description
     description = title_container[0].p.text
     language = detect(description)
     language_upper = language.upper()
+
+
 
     #Vervolgactie (Teamleader)
     teamleader = "Nieuw"
@@ -84,7 +114,7 @@ for container in containers:
     # Connecties op LinkedIN?
     linkedin = "Nee"
 
-    companyinfo = [date,company,city,behandelaar,language_upper,title,linkedin,teamleader,description,full_url]
+    companyinfo = [date,company,city,behandelaar,language_upper,explevel,title,linkedin,teamleader,description,full_url]
 
     for y in container:
 
