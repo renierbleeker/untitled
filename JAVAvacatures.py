@@ -58,6 +58,7 @@ for url in urls:
 
         #URL
         full_url = container.div.div.a["href"]
+        short_url = '=HYPERLINK("{}", "{}")'.format(full_url, "Link")
 
         #Title
         title_container = container.findAll("div", {"class":"info"})
@@ -105,7 +106,7 @@ for url in urls:
         linkedin = "Nee"
 
         # Create list with var's
-        companyinfo = [date,company,city,behandelaar,language_upper,explevel,title,linkedin,teamleader,description,full_url]
+        companyinfo = [date,company,city,behandelaar,language_upper,explevel,title,short_url,linkedin,teamleader,description,full_url]
 
         # Open Excel file
         wb = openpyxl.load_workbook('vacatures.xlsx')
