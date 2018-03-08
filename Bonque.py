@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup as soup
 # set var to workbook
 from langdetect import detect
 
-urls = ['https://www.jouwictvacature.nl/vacatures/java', 'https://www.jouwictvacature.nl/vacatures/net','https://www.jouwictvacature.nl/vacatures/php', 'https://www.jouwictvacature.nl/vacatures/front-end-development']
+urls = ['https://www.bonque.nl/vacatures/front-end', 'https://www.bonque.nl/vacatures/php','https://www.bonque.nl/vacatures/java', 'https://www.bonque.nl/vacatures/net']
 
 #scrape sites
 for url in urls:
@@ -31,19 +31,19 @@ for url in urls:
         date = datetime.date.today()
 
         # Developer
-        if url == "https://www.jouwictvacature.nl/vacatures/java":
+        if url == "https://www.bonque.nl/vacatures/java":
             developer = "Java Developer"
-        if url == "https://www.jouwictvacature.nl/vacatures/net":
+        if url == "https://www.bonque.nl/vacatures/net":
             developer = ".NET Developer"
-        if url == "https://www.jouwictvacature.nl/vacatures/php":
+        if url == "https://www.bonque.nl/vacatures/php":
             developer = "PHP Developer"
-        if url == "https://www.jouwictvacature.nl/vacatures/front-end-development":
+        if url == "https://www.bonque.nl/vacatures/front-end":
             developer = "Front-end Developer"
 
 
         #Company name
-        company_container = container.div.h2
-        company = company_container.text.strip()
+        company_container = container.div.img
+        company = company_container.attrs['alt']
 
         #Behandelaar
 
@@ -64,15 +64,15 @@ for url in urls:
                 behandelaar = "Renier"
 
         #City
-        city = container.div.a["title"]
+        city_container = container.findAll("div", {"class": "loc"})
+        city = city_container[0].text
 
         #URL
-        full_url = container.div.div.a["href"]
+        full_url = container.div.a["href"]
         short_url = '=HYPERLINK("{}", "{}")'.format(full_url, "Link")
 
         #Title
-        title_container = container.findAll("div", {"class":"info"})
-        title = title_container[0].img["alt"]
+        title = container.div.h2.a.text
 
         # Exp level
         find_words = ["Junior", "Medior", "Senior"]
@@ -103,10 +103,14 @@ for url in urls:
 
 
         #Description
-        description = title_container[0].p.text
+        # Description
+        complete_text = container.div.text
+        split_text = complete_text.split('\r\n')[1]
+        description = split_text.lstrip()
+
+        #Languagedetect
         language = detect(description)
         language_upper = language.upper()
-
 
 
         #Vervolgactie (Teamleader)
