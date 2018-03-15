@@ -112,6 +112,8 @@ for url in urls:
         language = detect(description)
         language_upper = language.upper()
 
+        if language_upper == "NL":
+            continue
 
         #Vervolgactie (Teamleader)
         teamleader = "Nieuw"
@@ -140,5 +142,4 @@ for url in urls:
            for i in range(0,len(companyinfo)):
             e=sheet.cell(row=start_row,column=1+i)
             e.value=companyinfo[i]
-
         wb.save("vacatures.xlsx")

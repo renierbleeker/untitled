@@ -107,6 +107,8 @@ for url in urls:
         language = detect(description)
         language_upper = language.upper()
 
+        if language_upper == "NL":
+            continue
 
 
         #Vervolgactie (Teamleader)
